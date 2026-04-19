@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Regex Engine (NFA/DFA)</title>
+
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <h1>🚀 Visual Regex Engine <span class="badge">NFA & DFA</span></h1>
+
+    <div class="container">
+        <h3>🛠️ Option A: Generate from Regex</h3>
+        <div style="background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #dbeafe;">
+            <label><strong>Enter Regex Pattern:</strong></label>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="regexInput" placeholder="e.g. (a|b)*abb" value="(a|b)*abb">
+                <button onclick="processRegex()" style="width: auto; white-space: nowrap;">Generate Machine</button>
+            </div>
+
+            <div class="toggle-container">
+                <input type="checkbox" id="dfaToggle">
+                <label for="dfaToggle">Convert to DFA (Deterministic)</label>
+            </div>
+
+            <small style="color: #64748b; display:block; margin-top:8px;">Supported: a-z, 0-9, *, |, ()</small>
+        </div>
+    </div>
+
+    <div class="container" id="config-step">
+        <h3>🛠️ Option B: Manual Configuration</h3>
+        <p>Or define states manually below.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div><label>States</label><input type="text" id="statesInput" value="q0, q1, q2"></div>
+            <div><label>Alphabet</label><input type="text" id="alphabetInput" value="a, b"></div>
+            <div><label>Start State</label><input type="text" id="startStateInput" value="q0"></div>
+            <div><label>Accept States</label><input type="text" id="acceptStatesInput" value="q2"></div>
+        </div>
+        <br>
+        <button onclick="initializeManualMachine()">Initialize & Define Rules</button>
+    </div>
+
+    <div class="container" id="rules-step" style="display:none;">
+        <h2>Define Transitions</h2>
+        <div id="transition-inputs"></div> <br>
+        <button onclick="saveTransitions()">Save Rules & Draw</button>
+        <button style="background-color: #64748b;" onclick="resetConfig()">Back</button>
+    </div>
+
+    <div class="container" id="run-step" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="margin:0;">▶️ Simulation <span id="mode-badge" class="badge">NFA</span></h2>
+            <button style="width:auto; background-color: #64748b; padding: 8px 15px;" onclick="resetConfig()">Reset</button>
+        </div>
+        <br>
+
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="testString" placeholder="Enter string to test (e.g. ababb)">
+            <button onclick="runSimulation()" style="width: auto;">RUN SIMULATION</button>
+        </div>
+
+        <div id="visualization-area"></div>
+
+        <div id="log">Logs will appear here...</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
